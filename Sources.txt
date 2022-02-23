@@ -1,22 +1,31 @@
 Sports Betting Articles:
 
-Title: 
-	Sports Betting: Can Gamblers Beat Randomness 
+Title: Sports Betting: Can Gamblers Beat Randomness 
 Author: Cantinotti M
 
-Title: 
-	Risk Factors for Gambling Problems Specifically Associated with Sports Betting
+Title: Risk Factors for Gambling Problems Specifically Associated with Sports Betting
 Author: Alex Russell
 
-https://www.debt.org/advice/gambling/#:~:text=The%20gambling%20industry%20in%20the,estimated%20to%20be%20around%20%2455%2C000.
+Title: Exploiting sports-betting market using machine learning
+Author: Ondřej HubáčekGustav ŠourekFilip Železný
+
+https://www.debt.org/advice/gambling/#:~:text=The%20gambling%20industry%20in%20the,estimated%20to%20be%20around%2 , 2455%2C000.
+
+Title: Does Playing Sports Video Games Predict Increased Involvement in Real-Life Sports Over Several Years Among Older Adolescents and Emerging Adults?
+Author: Paul J C AdachiTeena Willoughby
 
 
 AI Articles
 Rudrapal, Dwijen & Boro, Sasank & Srivastava, Jatin & Singh, Shyamu. (2020). A Deep Learning Approach to Predict Football Match Result. 10.1007/978-981-13-8676-3_9.
 
-Title:
-  Logistic regression
+Title: Logistic regression
 Author: Marcello Pagano
 
-Title:
-  
+Title: Winning Games in Canadian Football: A Logistic Regression Analysis
+Author: Keith A. Willoughby
+
+
+https://www.ibm.com/topics/linear-regression#:~:text=Linear%20regression%20analysis%20is%20used,is%20called%20the%20dependent%20variable.&text=Linear%20regression%20fits%20a%20straight,predicted%20and%20actual%20output%20values.
+
+Title: In-play forecasting of win probability in One-Day International cricket: A dynamic logistic regression model
+Author: MuhammadAsif , Ian G.McHale
