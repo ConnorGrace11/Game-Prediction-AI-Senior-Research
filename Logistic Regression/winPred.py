@@ -25,15 +25,15 @@ xstats = xstats - xmeans
 x[stat_columns] = xstats
 x
 
-print(statdf["Wins"].values) # notice the extra space in the values
-y = pd.Series([val >= 9 for val in statdf["Wins"].values], index=statdf.index) # keep adultdf index for train/test splits
+print(statdf["Wins"].values)
+y = pd.Series([val >= 9 for val in statdf["Wins"].values], index=statdf.index)
 y
 
 indexes = pd.Series(statdf.index).sample(frac=1.0, random_state=0)
 train_idxs = list(range(0, int(len(indexes)*0.6)))
 val_idxs = list(range(int(len(indexes)*0.6), int(len(indexes)*0.8)))
 test_idxs = list(range(int(len(indexes)*0.8), len(indexes)))
-trainx = x.iloc[indexes.iloc[train_idxs]] # be careful to use iloc twice, otherwise will just grab indexes 0, 1, ... for train
+trainx = x.iloc[indexes.iloc[train_idxs]] 
 valx = x.iloc[indexes.iloc[val_idxs]]
 testx = x.iloc[indexes.iloc[test_idxs]]
 trainy = y.iloc[indexes.iloc[train_idxs]]
@@ -44,7 +44,6 @@ torch.tensor(trainy.to_numpy()).long()
 testdf = statdf.iloc[indexes.iloc[test_idxs]]
 len(testdf[testdf['Wins'] >= 9])
 
-#model = logisticRegression(trainx.shape[1], 2) # output_size must equal number of classes represented in y
 model = torch.nn.Sequential(
     torch.nn.Linear(trainx.shape[1], 200),
     torch.nn.ReLU(),
@@ -55,17 +54,16 @@ model = torch.nn.Sequential(
     torch.nn.Linear(200, 2),
     torch.nn.Sigmoid()
 )
-model.cuda() # put it on gpu
-criterion = torch.nn.CrossEntropyLoss() #weight=torch.tensor([1., 3.]).cuda())
-# create an optimizer of type stochastic gradient descent
-# lr is learning rate, want this small probably
-optimizer = torch.optim.Adam(model.parameters(), lr=0.01) # Adam far better than SGD in this case
+model.cuda()
+criterion = torch.nn.CrossEntropyLoss()
+
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01) 
 
 train_loss_per_epoch = []
 train_error_per_epoch = []
 val_loss_per_epoch = []
 val_error_per_epoch = []
-# each "epoch" runs through all training data
+# Training and Test Data
 trainx_gpu = torch.tensor(trainx.to_numpy()).float().cuda()
 trainy_gpu = torch.tensor(trainy.to_numpy()).long().cuda()
 valx_gpu = torch.tensor(valx.to_numpy()).float().cuda()
@@ -73,7 +71,7 @@ valy_gpu = torch.tensor(valy.to_numpy()).long().cuda()
 testx_gpu = torch.tensor(testx.to_numpy()).float().cuda()
 testy_gpu = torch.tensor(testy.to_numpy()).long().cuda()
 for epoch in range(200):
-    optimizer.zero_grad() # clear "gradients" calculated in prior epoch
+    optimizer.zero_grad() 
     train_pred = model(trainx_gpu)
     train_loss = criterion(train_pred, trainy_gpu)
     train_error = 1.0 - sklearn.metrics.accuracy_score([pred[1] > pred[0] for pred in train_pred.cpu().detach().numpy()], trainy)
@@ -86,8 +84,8 @@ for epoch in range(200):
     train_error_per_epoch.append(train_error)
     val_loss_per_epoch.append(val_loss.item())
     val_error_per_epoch.append(val_error)
-    train_loss.backward() # calculate gradients (errors) on model parameters
-    optimizer.step() # adjust model parameters
+    train_loss.backward() 
+    optimizer.step() 
 test_pred = model(testx_gpu)
 test_error = 1.0 - sklearn.metrics.accuracy_score([pred[1] > pred[0] for pred in test_pred.cpu().detach().numpy()], testy)
 print("Test error: %.4f" % test_error)
