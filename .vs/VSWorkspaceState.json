@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Logistic Regression",
     "\\Practice"
   ],
-  "SelectedNode": "\\Practice\\linearpractice.py",
+  "SelectedNode": "\\Logistic Regression\\winPred.py",
   "PreviewInSolutionExplorer": false
 }
