@@ -6,15 +6,15 @@ import random
 import sklearn.metrics
 
 
-statdf = pd.read_csv('nfl.data', header=None)
-statdf.columns = ["Team", "Passing Yards", "Rushing Yards", "Wins"]
+statdf = pd.read_csv('games.data', header=None)
+statdf.columns = ["Date", "Visitors", "V Score", "V Overall", "Home", "H Score", "H Overall", "WinLoss"]
 statdf
 
 
-len(statdf[statdf['Wins'] >= 9])
+len(statdf[statdf['WinLoss'] == 1])
 
-team_columns = ["Team"]
-stat_columns = ["Passing Yards", "Rushing Yards", "Wins"]
+team_columns = ["Home"]
+stat_columns = ["V Score", "H Score", "V Overall", "H Overall"]
 x = pd.get_dummies(statdf[team_columns+stat_columns], columns=team_columns, prefix=team_columns)
 xstats = x[stat_columns].to_numpy()
 xmin = xstats.min(axis=0)
@@ -25,8 +25,8 @@ xstats = xstats - xmeans
 x[stat_columns] = xstats
 x
 
-print(statdf["Wins"].values)
-y = pd.Series([val >= 9 for val in statdf["Wins"].values], index=statdf.index)
+print(statdf["WinLoss"].values)
+y = pd.Series([val == 1 for val in statdf["WinLoss"].values], index=statdf.index)
 y
 
 indexes = pd.Series(statdf.index).sample(frac=1.0, random_state=0)
@@ -42,7 +42,7 @@ testy = y.iloc[indexes.iloc[test_idxs]]
 torch.tensor(trainy.to_numpy()).long()
 
 testdf = statdf.iloc[indexes.iloc[test_idxs]]
-len(testdf[testdf['Wins'] >= 9])
+len(testdf[testdf['WinLoss'] == 0])
 
 model = torch.nn.Sequential(
     torch.nn.Linear(trainx.shape[1], 200),
@@ -57,7 +57,7 @@ model = torch.nn.Sequential(
 model.cuda()
 criterion = torch.nn.CrossEntropyLoss()
 
-optimizer = torch.optim.Adam(model.parameters(), lr=0.01) 
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001) 
 
 train_loss_per_epoch = []
 train_error_per_epoch = []
@@ -70,7 +70,7 @@ valx_gpu = torch.tensor(valx.to_numpy()).float().cuda()
 valy_gpu = torch.tensor(valy.to_numpy()).long().cuda()
 testx_gpu = torch.tensor(testx.to_numpy()).float().cuda()
 testy_gpu = torch.tensor(testy.to_numpy()).long().cuda()
-for epoch in range(200):
+for epoch in range(500):
     optimizer.zero_grad() 
     train_pred = model(trainx_gpu)
     train_loss = criterion(train_pred, trainy_gpu)
@@ -105,9 +105,9 @@ plt.show()
 cm = sklearn.metrics.confusion_matrix(testy, [pred[1] > pred[0] for pred in test_pred.cpu().detach().numpy()])
 cm
 
-cmplot = sklearn.metrics.ConfusionMatrixDisplay(cm, display_labels=["<9 Wins", ">9 Wins"])
+cmplot = sklearn.metrics.ConfusionMatrixDisplay(cm, display_labels=["Win", "Loss"])
 cmplot.plot()
 
 cm = sklearn.metrics.confusion_matrix(testy, [pred[1] > pred[0] for pred in test_pred.cpu().detach().numpy()], normalize='true')
-cmplot = sklearn.metrics.ConfusionMatrixDisplay(cm, display_labels=["<9 Wins", ">9 Wins"])
+cmplot = sklearn.metrics.ConfusionMatrixDisplay(cm, display_labels=["Loss", "Win"])
 cmplot.plot()
