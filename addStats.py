@@ -1,8 +1,8 @@
-import pandas as pd
+
 
 #Trying to add in data automatically so that it is less time consuming for any future data
 myData = {
-        
+         'winLoss': 'Defense',
         'Houston Texans': (72, 78),
         'Jacksonville Jaguars': (75, 76),
         'Kansas City Chiefs': (78, 96),
@@ -36,17 +36,11 @@ myData = {
         'San Francisco 49ers': (84, 80),
         'Tampa Bay Buccaneers': (90, 92),
 }
-df = pd.read_csv('games.csv')
-df
-
-cols = ['Defense', 'Offense']
-df1 = (pd.DataFrame.from_dict(myData, orient='index', columns=cols)
-         .rename_axis('Visitors').reset_index())
-df1['Visitors']
-if df1['Visitors'].values[0]=="Houston Texans":
-    print("Hello")
-else:
-    print("Nope")
-
-#out = df.merge(df1, on='Visitors', how='left')
-#out.to_csv('gamescopy.csv', index=False)
+import csv
+with open('games.csv','r') as csvinput:
+    with open('addedGames.csv', 'w') as csvoutput:
+        writer = csv.writer(csvoutput)
+        for row in csv.reader(csvinput):
+            writer.writerow(row+['Berry'])
+#df = pd.read_csv('games.csv')
+#df
