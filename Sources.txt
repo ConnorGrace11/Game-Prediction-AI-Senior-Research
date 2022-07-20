@@ -41,3 +41,9 @@ Gilles Chatellier MD*, Frangois Gueyffier, MID, PhD**, Patrice Degoulet MD, PhD*
 Marie-Christine Jaulent PhD*
 
 https://scikit-learn.org/stable/
+
+Exploring the Effectiveness of Learning
+American Football through
+Playing the Video Game “Madden NFL”
+Seth E. Jenny & David Schary
+
