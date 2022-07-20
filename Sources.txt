@@ -40,3 +40,4 @@ Isabelle Colombet MD*, MPH, Alan Ruelland, MS*,
 Gilles Chatellier MD*, Frangois Gueyffier, MID, PhD**, Patrice Degoulet MD, PhD*,
 Marie-Christine Jaulent PhD*
 
+https://scikit-learn.org/stable/
