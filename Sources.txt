@@ -33,3 +33,10 @@ Author: MuhammadAsif , Ian G.McHale
 
 Multilayer Perceptron (MLP)
 H. Taud and J.F. Mas
+
+Models to predict cardiovascular risk: comparison of CART,
+Multilayer perceptron and logistic regression
+Isabelle Colombet MD*, MPH, Alan Ruelland, MS*,
+Gilles Chatellier MD*, Frangois Gueyffier, MID, PhD**, Patrice Degoulet MD, PhD*,
+Marie-Christine Jaulent PhD*
+
