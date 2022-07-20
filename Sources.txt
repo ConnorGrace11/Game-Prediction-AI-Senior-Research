@@ -29,3 +29,7 @@ https://www.ibm.com/topics/linear-regression#:~:text=Linear%20regression%20analy
 
 Title: In-play forecasting of win probability in One-Day International cricket: A dynamic logistic regression model
 Author: MuhammadAsif , Ian G.McHale
+
+
+Multilayer Perceptron (MLP)
+H. Taud and J.F. Mas
