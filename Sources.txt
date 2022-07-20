@@ -47,3 +47,5 @@ American Football through
 Playing the Video Game “Madden NFL”
 Seth E. Jenny & David Schary
 
+Logistic Regression
+Michael P. LaValley
