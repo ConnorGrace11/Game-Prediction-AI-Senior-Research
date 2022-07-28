@@ -1,4 +1,3 @@
-#import pandas as pd
 
 myData = {
          'winLoss': 'Defense',
@@ -74,13 +73,47 @@ oData = {
 
 }
 
+qbData = {
+         'winLoss': 'Defense',
+        'Houston Texans': 71,
+        'Jacksonville Jaguars': 76,
+        'Kansas City Chiefs': 95,
+        'Miami Dolphins': 75,
+        'Denver Broncos': 75,
+        'Green Bay Packers': 96,
+        'Dallas Cowboys': 89,
+        'Pittsburgh Steelers': 73,
+        'Washington': 69,
+        'New York Giants': 70,
+        'Philadelphia Eagles': 74,
+        'Tennessee Titans': 83,
+        'Indianapolis Colts': 73,
+        'Las Vegas Raiders': 83,
+        'Los Angeles Chargers': 88,
+        'Buffalo Bills': 92,
+        'New England Patriots': 78,
+        'New York Jets': 73,
+        'Cincinnati Bengals': 90,
+        'Cleveland Browns': 77,
+        'Baltimore Ravens': 87,
+        'Minnesota Vikings': 80,
+        'Chicago Bears': 74,
+        'Detroit Lions': 72,
+        'New Orleans Saints': 76,
+        'Carolina Panthers': 71,
+        'Atlanta Falcons': 81,
+        'Los Angeles Rams': 85,
+        'Seattle Seahawks': 87,
+        'Arizona Cardinals': 84,
+        'San Francisco 49ers': 77,
+        'Tampa Bay Buccaneers': 97,
+
+}
+
 import csv
-with open('games.csv','r') as csvinput:
-    with open('total.csv', 'w') as csvoutput:
+with open('total.csv','r') as csvinput:
+    with open('qbTotal.csv', 'w') as csvoutput:
         writer = csv.writer(csvoutput)
         for row in csv.reader(csvinput):
-            if row[1] in myData.keys() and row[4] in oData.keys():
-                writer.writerow(row + [myData[row[1]]] + [myData[row[4]]] + [oData[row[1]]] +[oData[row[4]]])
-            #writer.writerow(row+['Berry'])
-#df = pd.read_csv('games.csv')
-#df
+            if row[1] in qbData.keys() and row[4] in qbData.keys():
+                writer.writerow(row + [qbData[row[1]]] + [qbData[row[4]]])
