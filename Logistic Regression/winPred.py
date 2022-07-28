@@ -6,28 +6,27 @@ import random
 import sklearn.metrics
 
 
-statdf = pd.read_csv('games.data', header=None)
-statdf.columns = ["Date", "Visitors", "V Score", "V Overall", "Home", "H Score", "H Overall", "WinLoss"]
-statdf
+statdf = pd.read_csv('qbTotal.csv', header=None)
+statdf.columns = ["Date", "Visitors", "V Score", "V Overall", "Home", "H Score", "H Overall", "WinLoss", "V Defense", "H Defense", "V Offense", "H Offense", "V QB", "H QB"]
 
 
 len(statdf[statdf['WinLoss'] == 1])
 
-team_columns = ["Home"]
-stat_columns = ["V Score", "H Score", "V Overall", "H Overall"]
-x = pd.get_dummies(statdf[team_columns+stat_columns], columns=team_columns, prefix=team_columns)
-xstats = x[stat_columns].to_numpy()
+team_columns = ["Home", "Visitors"]
+stat_columns = ["H Defense", "V Defense", "H Offense", "V Offense", "H Overall", "V Overall", "V QB", "H QB"] #"H Defense", "V Defense", "H Offense", "V Offense", "H Overall", "V Overall", "V QB", "H QB"
+x = statdf[stat_columns] #pd.get_dummies(statdf[team_columns+stat_columns], columns=team_columns, prefix=team_columns)
+xstats = x.to_numpy()
 xmin = xstats.min(axis=0)
 xmax = xstats.max(axis=0)
 xstats = (xstats - xmin) / (xmax - xmin)
 xmeans = xstats.mean(axis=0)
 xstats = xstats - xmeans
 x[stat_columns] = xstats
-x
+
 
 print(statdf["WinLoss"].values)
 y = pd.Series([val == 1 for val in statdf["WinLoss"].values], index=statdf.index)
-y
+
 
 indexes = pd.Series(statdf.index).sample(frac=1.0, random_state=0)
 train_idxs = list(range(0, int(len(indexes)*0.6)))
@@ -45,13 +44,13 @@ testdf = statdf.iloc[indexes.iloc[test_idxs]]
 len(testdf[testdf['WinLoss'] == 0])
 
 model = torch.nn.Sequential(
-    torch.nn.Linear(trainx.shape[1], 200),
+    torch.nn.Linear(trainx.shape[1], 10),
     torch.nn.ReLU(),
     torch.nn.Dropout(p=0.25),
-    torch.nn.Linear(200, 200),
+    torch.nn.Linear(10, 10),
     torch.nn.ReLU(),
     torch.nn.Dropout(p=0.25),
-    torch.nn.Linear(200, 2),
+    torch.nn.Linear(10, 2),
     torch.nn.Sigmoid()
 )
 model.cuda()
@@ -92,11 +91,15 @@ print("Test error: %.4f" % test_error)
 
 plt.plot(range(len(train_loss_per_epoch)), train_loss_per_epoch, label="train loss")
 plt.plot(range(len(val_loss_per_epoch)), val_loss_per_epoch, label="val loss")
+plt.ylabel('loss',color='b')
+plt.xlabel('Number of Epochs',color='b')
 plt.legend()
 plt.show()
 
 plt.plot(range(len(train_error_per_epoch)), train_error_per_epoch, label="train error")
 plt.plot(range(len(val_error_per_epoch)), val_error_per_epoch, label="val error")
+plt.ylabel('error',color='b')
+plt.xlabel('Number of Epochs',color='b')
 plt.legend()
 plt.show()
 
