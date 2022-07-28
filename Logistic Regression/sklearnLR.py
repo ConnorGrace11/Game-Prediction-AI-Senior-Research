@@ -1,3 +1,4 @@
+#This runs my dataset using a logistic regression model provided by sklearn
 from sklearn.linear_model import LogisticRegression
 import torch 
 import numpy as np
