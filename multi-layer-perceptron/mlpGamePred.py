@@ -6,9 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random
 import sklearn.metrics
-#import seaborn as sns
-#x = torch.ones(1, requires_grad=True)
-#print(x.grad)    # returns None
+
 
 statdf = pd.read_csv('total.csv', header=None)
 statdf.columns = ["Date", "Visitors", "V Score", "V Overall", "Home", "H Score", "H Overall", "WinLoss", "V Defense", "H Defense", "V Offense", "H Offense"]
@@ -26,7 +24,7 @@ xmeans = xstats.mean(axis=0)
 xstats = xstats - xmeans
 x[stat_columns] = xstats
 
-print(statdf["WinLoss"].values) # notice the extra space in the values
+print(statdf["WinLoss"].values)
 y = pd.Series([val == 1 for val in statdf["WinLoss"].values], index=statdf.index)
 
 indexes = pd.Series(statdf.index).sample(frac=1.0, random_state=0)
