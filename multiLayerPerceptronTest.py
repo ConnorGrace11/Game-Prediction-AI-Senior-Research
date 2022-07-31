@@ -1,3 +1,5 @@
+#This code is not mine and was provided by https://medium.com/biaslyai/pytorch-introduction-to-neural-network-feedforward-neural-network-model-e7231cff47cb 
+#to give me a better understanding of multi-layer-perceptron models
 import torch 
 import numpy
 x = torch.ones(1, requires_grad=True)
