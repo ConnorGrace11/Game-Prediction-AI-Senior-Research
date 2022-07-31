@@ -23,14 +23,14 @@ xmeans = xstats.mean(axis=0)
 xstats = xstats - xmeans
 x[stat_columns] = xstats
 
-print(statdf["WinLoss"].values) # notice the extra space in the values
-y = pd.Series([val == 1 for val in statdf["WinLoss"].values], index=statdf.index) # keep adultdf index for train/test splits
+print(statdf["WinLoss"].values)
+y = pd.Series([val == 1 for val in statdf["WinLoss"].values], index=statdf.index) 
 
 indexes = pd.Series(statdf.index).sample(frac=1.0, random_state=0)
 train_idxs = list(range(0, int(len(indexes)*0.6)))
 val_idxs = list(range(int(len(indexes)*0.6), int(len(indexes)*0.8)))
 test_idxs = list(range(int(len(indexes)*0.8), len(indexes)))
-trainx = x.iloc[indexes.iloc[train_idxs]] # be careful to use iloc twice, otherwise will just grab indexes 0, 1, ... for train
+trainx = x.iloc[indexes.iloc[train_idxs]]
 valx = x.iloc[indexes.iloc[val_idxs]]
 testx = x.iloc[indexes.iloc[test_idxs]]
 trainy = y.iloc[indexes.iloc[train_idxs]]
