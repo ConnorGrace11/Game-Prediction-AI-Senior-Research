@@ -1,4 +1,4 @@
-#This ran my data using a model provided by sklearn
+#This ran my data using a multi-layer-perceptron model provided by sklearn
 import torch 
 #import numpy
 import numpy as np
