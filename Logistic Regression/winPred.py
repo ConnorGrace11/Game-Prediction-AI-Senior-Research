@@ -6,6 +6,9 @@ import random
 import sklearn.metrics
 
 
+#Load data and sort out the necessary columns, as well as data normalization
+
+
 statdf = pd.read_csv('qbTotal.csv', header=None)
 statdf.columns = ["Date", "Visitors", "V Score", "V Overall", "Home", "H Score", "H Overall", "WinLoss", "V Defense", "H Defense", "V Offense", "H Offense", "V QB", "H QB"]
 
@@ -23,7 +26,7 @@ xmeans = xstats.mean(axis=0)
 xstats = xstats - xmeans
 x[stat_columns] = xstats
 
-
+#create our goal values which are wins and losses
 print(statdf["WinLoss"].values)
 y = pd.Series([val == 1 for val in statdf["WinLoss"].values], index=statdf.index)
 
@@ -43,6 +46,7 @@ torch.tensor(trainy.to_numpy()).long()
 testdf = statdf.iloc[indexes.iloc[test_idxs]]
 len(testdf[testdf['WinLoss'] == 0])
 
+#initialize model
 model = torch.nn.Sequential(
     torch.nn.Linear(trainx.shape[1], 10),
     torch.nn.ReLU(),
@@ -58,6 +62,7 @@ criterion = torch.nn.CrossEntropyLoss()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001) 
 
+#training the model here
 train_loss_per_epoch = []
 train_error_per_epoch = []
 val_loss_per_epoch = []
@@ -89,6 +94,7 @@ test_pred = model(testx_gpu)
 test_error = 1.0 - sklearn.metrics.accuracy_score([pred[1] > pred[0] for pred in test_pred.cpu().detach().numpy()], testy)
 print("Test error: %.4f" % test_error)
 
+#Loss graph
 plt.plot(range(len(train_loss_per_epoch)), train_loss_per_epoch, label="train loss")
 plt.plot(range(len(val_loss_per_epoch)), val_loss_per_epoch, label="val loss")
 plt.ylabel('loss',color='b')
@@ -96,6 +102,7 @@ plt.xlabel('Number of Epochs',color='b')
 plt.legend()
 plt.show()
 
+#Error graph
 plt.plot(range(len(train_error_per_epoch)), train_error_per_epoch, label="train error")
 plt.plot(range(len(val_error_per_epoch)), val_error_per_epoch, label="val error")
 plt.ylabel('error',color='b')
@@ -103,7 +110,7 @@ plt.xlabel('Number of Epochs',color='b')
 plt.legend()
 plt.show()
 
-# confusion matrix
+# confusion matrix for prediction accuracy
 
 cm = sklearn.metrics.confusion_matrix(testy, [pred[1] > pred[0] for pred in test_pred.cpu().detach().numpy()])
 cm
