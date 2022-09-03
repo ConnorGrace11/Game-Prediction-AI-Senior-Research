@@ -1,4 +1,4 @@
-
+#I can change the dictionary values to add any more stats that may be of use with this code
 myData = {
          'winLoss': 'Defense',
         'Houston Texans': 72,
